@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "private": "true",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@vitejs/plugin-vue": "^4.3.3",
+    "autoprefixer": "^10.4.15",
+    "axios": "^1.5.0",
+    "bootstrap": "^5.3.1",
+    "bootstrap-icons": "^1.10.5",
+    "element-plus": "^2.3.14",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
+    "nodemon": "^3.0.1",
+    "postcss": "^8.4.28",
+    "postcss-cli": "^10.1.0",
+    "sass": "^1.66.1",
+    "vue": "3.3.4",
+    "vue-multiselect": "^3.0.0-beta.2"
+  },
+  "scripts": {
+    "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
+    "build:css": "yarn build:css:compile && yarn build:css:prefix",
+    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\""
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "devDependencies": {
+    "vite": "^4.3.0",
+    "vite-plugin-ruby": "^3.2.0"
+  }
+}
