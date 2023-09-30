@@ -1,0 +1,13 @@
+Rails.application.routes.draw do
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # Defines the root path route ("/")
+  get "home/index"  
+  get "api_docs/index"
+  root "home#index"
+  namespace :api do
+    namespace :v1 do
+      resources :world_heritages, only: [:index, :show]
+    end
+  end
+end

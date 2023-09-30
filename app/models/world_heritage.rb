@@ -1,0 +1,2 @@
+class WorldHeritage < ApplicationRecord
+end
