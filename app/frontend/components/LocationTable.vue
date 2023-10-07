@@ -13,7 +13,7 @@
       </tr>
     </tbody>
   </table> -->
-  <el-table class="info-table" :data="location" stripe @expand-change="handleExpandChange">
+  <el-table class="info-table" :data="tableData" stripe @expand-change="handleExpandChange">
     <el-table-column type="expand">
       <template #default="props">
         <p>{{ props.row.short_description_en }}</p>
@@ -22,14 +22,24 @@
     <el-table-column label="Name" prop="name_en" />
     <el-table-column label="Country" prop="states_name_en" />
   </el-table>
+  <template v-if="total >= 10">
+    <div class="example-pagination-block">
+      <el-pagination 
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="total"
+      layout="prev, pager, next"/>
+    </div>
+  </template>
 </template>
 
 <script>
-import { ElTable, ElInput } from 'element-plus'
+import { ElTable, ElInput, ElPagination } from 'element-plus'
 
 export default {
   components: {
-    ElTable, ElInput
+    ElTable, ElInput, ElPagination
   },
   props: {
     location: {
@@ -41,6 +51,11 @@ export default {
     return {
       country: { name: 'AU' },
       options: [],
+      currentPage: 1, 
+      total: 0, 
+      list: this.location, 
+      tableData: [], 
+      pageSize: 10, 
       // country : 'AU',
     }
   },
@@ -54,7 +69,28 @@ export default {
       // } else {
       //   this.$emit('zoom-to-location', null); 
       // }
+    },
+    handleCurrentChange(val) {    
+      this.currentPage = val;
+      this.getList();
+    },
+    getList() {
+      this.total = this.list.length;
+      this.tableData = this.list.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+    },
+  },
+  watch: {
+    location: {
+      handler: function (val, _oldVal) {
+        this.list = val;
+        this.currentPage = 1;
+        this.getList();
+      },
+      deep: true
     }
+  },
+  created() {
+    this.getList();
   },
 };
 </script>
@@ -63,5 +99,11 @@ export default {
     width: 100%;
     margin-top: 20px;
     // text-align: center;
+  }
+
+  .example-pagination-block {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
   }
 </style>

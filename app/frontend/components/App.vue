@@ -1,18 +1,24 @@
 <template>
-  <div class="page">
-    <div class="select">
-      <div class="row">
-        <div class="col">
-          <VueMultiselect v-model="region" :options="region_list" :allow-empty="true" label="name" track-by="name" placeholder="Select Region"></VueMultiselect>
-         </div>
-        <div class="col">
-          <VueMultiselect v-model="country" :options="showCountryList" :allow-empty="true" label="name" track-by="name" placeholder="Select Country"></VueMultiselect>
+  <!-- <div class="page"> -->
+    <div class="row">
+      <div class="col">
+        <div class="select">
+          <div class="row">
+            <div class="col">
+              <VueMultiselect v-model="region" :options="region_list" :allow-empty="true" label="name" track-by="name" placeholder="Select Region"></VueMultiselect>
+            </div>
+            <div class="col">
+              <VueMultiselect v-model="country" :options="showCountryList" :allow-empty="true" label="name" track-by="name" placeholder="Select Country"></VueMultiselect>
+            </div>
+          </div>
+          <LocationTable :location="showLocations" @zoom-to-location="zoomToLocation"></LocationTable>
         </div>
       </div>
-      <LocationTable :location="showLocations" @zoom-to-location="zoomToLocation"></LocationTable>
+      <div class="col">
+        <div id="map"></div>
+      </div>
     </div>
-    <div id="map"></div>
-  </div>
+  <!-- </div> -->
 </template>
 <script>
 import L from 'leaflet';
@@ -61,13 +67,6 @@ export default {
     //   return `${name} — [${language}]`
     // }
     zoomToLocation(item) {
-      // console.log('zoomToLocation');
-      // console.log(item);
-      // if (!item) {
-      //   openStreetMap.setView(new L.LatLng(0, 0), 2);
-      //   this.updateMap(openStreetMap);
-      //   return;
-      // }
       openStreetMap.setView(new L.LatLng(item.latitude, item.longitude), 10);
       openStreetMap.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
@@ -79,11 +78,6 @@ export default {
           item.longitude,
         ]).addTo(openStreetMap).bindPopup(`<p><strong>${item.name_en}</strong></p>${item.short_description_en}`);
       marker.openPopup();
-      // console.log(markers.filter((marker) => {
-      //   return marker._latlng.lat == item.latitude && marker._latlng.lng == item.longitude
-      // }))
-      // openStreetMap.zoomIn(5);
-      // this.updateMap(openStreetMap);
     }
   },
   watch: {
@@ -167,14 +161,14 @@ export default {
 
   #map {
       // margin-top: 150px;
-      position: relative;
+      // position: relative;
       height: 100vh;
-      width: 50%;
+      width: 100%;
   }
   .select {
     margin-top: 10px;
     margin-left: 10px;
-    margin-right: 10px;
-    width: 50%;
+    // margin-right: 10px;
+    // width: 50%;
   }
 </style>
