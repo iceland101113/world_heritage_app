@@ -32,10 +32,13 @@
       layout="prev, pager, next"/>
     </div>
   </template>
+  <!-- <div>{{ this.counter }}</div> -->
 </template>
 
 <script>
 import { ElTable, ElInput, ElPagination } from 'element-plus'
+import { mapState } from 'pinia';
+import { useStore } from '../../store/main';
 
 export default {
   components: {
@@ -58,6 +61,10 @@ export default {
       pageSize: 10, 
       // country : 'AU',
     }
+  },
+  computed: {
+    // 可透過 this.counter 取得狀態
+    ...mapState(useStore, ['counter']),
   },
   methods: {
     handleExpandChange(row, expandedRows) {

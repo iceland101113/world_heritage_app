@@ -26,9 +26,9 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
-import { createApp } from 'vue/dist/vue.esm-bundler';  
-import App from '../components/App.vue';
-import LocationTable from '../components/LocationTable.vue';
+// import { createApp } from 'vue/dist/vue.esm-bundler';  
+// import App from '../components/App.vue';
+// import LocationTable from '../components/LocationTable.vue';
 // import 'bootstrap/js/src/alert'  
 // import 'bootstrap/js/src/button'  
 // import 'bootstrap/js/src/carousel'  
@@ -41,28 +41,7 @@ import LocationTable from '../components/LocationTable.vue';
 // import 'bootstrap/js/src/toast'  
 // import 'bootstrap/js/src/tooltip' 
 
-import * as bootstrap from 'bootstrap';
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-// const app = createApp({  
-//   data() {  
-//     return {  
-//       course: 'Intro to Vue 3 and Rails'  
-//     }  
-//   }  
-// })  
-
-const app = createApp(App);
-// app.use(VueGoogleMaps, {
-//     load: {
-//         key: 'AIzaSyCR8Unxd3j0H_uVlrdxZPmwREJs0g_bieA',
-//         // language: 'de',
-//     },
-// }).mount('#app');
-app.use(ElementPlus)
-app.component('LocationTable', LocationTable)
-app.mount('#app');  
-// console.log("app", app);  
+import * as bootstrap from 'bootstrap'; 
 window.bootstrap = bootstrap;
 
 // initialize the page
