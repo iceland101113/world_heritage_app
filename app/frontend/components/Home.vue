@@ -29,7 +29,7 @@ import "leaflet.markercluster/dist/leaflet.markercluster";
 // import "leaflet.markercluster/dist/markercluster.css";
 // import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import VueMultiselect from 'vue-multiselect'
-import LocationTable from './home/locationTable.vue';
+import LocationTable from './home/LocationTable.vue';
 import { mapState, mapActions } from 'pinia';
 import { useStore } from '../store/main';
 
