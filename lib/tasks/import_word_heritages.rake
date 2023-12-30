@@ -3,7 +3,7 @@ require 'csv'
 namespace :import_word_heritages do
   desc 'Import heritages from csv file'
   task :run => :environment do
-    path = Pathname.new('~/Documents/world_heritage_app/world_Heritage_List.csv').expand_path
+    path = Pathname.new('world_Heritage_List.csv').expand_path
     sub_string = {
       '<p>' => '',
       '</p>' => '',
