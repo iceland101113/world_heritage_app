@@ -24,12 +24,12 @@
 </template>
 <script>
 import L from 'leaflet';
+// import 'leaflet.markercluster';
 import "leaflet.markercluster/dist/leaflet.markercluster";
-import "leaflet.markercluster/dist/markercluster.css";
-import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+// import "leaflet.markercluster/dist/markercluster.css";
+// import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import VueMultiselect from 'vue-multiselect'
 import LocationTable from './home/locationTable.vue';
-// import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
 import { useStore } from '../store/main';
 
@@ -148,6 +148,7 @@ export default {
   },
   mounted() {
     // ...
+    // const L = window['L'];
     openStreetMap = L.map('map', {
       center: [0, 0],
       // 可以嘗試改變 zoom 的數值

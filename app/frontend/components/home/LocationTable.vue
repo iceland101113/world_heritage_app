@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import { ElTable, ElInput, ElPagination } from 'element-plus'
+// import { ElTable, ElInput, ElPagination } from 'element-plus'
 import { mapState } from 'pinia';
 import { useStore } from '../../store/main';
 
 export default {
-  components: {
-    ElTable, ElInput, ElPagination
-  },
+  // components: {
+  //   ElTable, ElInput, ElPagination
+  // },
   props: {
     location: {
       type: Array,
