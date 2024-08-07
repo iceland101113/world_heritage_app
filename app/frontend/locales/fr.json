@@ -1,0 +1,16 @@
+{
+  "greeting": "Bonjour!",
+  "select_region": "Choisissez une région",
+  "select_country": "Choisissez le pays",
+  "name": "Nom",
+  "country": "Pays",
+  "introduction": "Introduction",
+  "introduction_content": "The Heritages API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.",
+  "heritage_api_query_params_information": "This is the API for retrieve the world heritages information. You can pass below params to filter the return result.",
+  "heritage_api_response": "The following elements are the attribute returned in the Heritages API response",
+  "description": "Description",
+  "query_params": "Query Params",
+  "field_value": "Value",
+  "field": "Field",
+  "unique_number": "Unique Number"
+}

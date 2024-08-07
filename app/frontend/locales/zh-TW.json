@@ -1,0 +1,17 @@
+{
+  "greeting": "你好!",
+  "select_region": "選擇區域",
+  "select_country": "選擇國家",
+  "name": "名稱",
+  "country": "國家",
+  "heritage": "世界遺產",
+  "introduction": "簡介",
+  "introduction_content": "Heritages API 的組織結構是基於 REST。我們的 API 採用可預測的資源導向 URL，接受form-encoded request bodies，返回 JSON 編碼的回應，並使用標準的 HTTP 回應狀態碼、身份驗證和動詞。",
+  "heritage_api_query_params_information": "請使用以下查詢參數來獲取您想要的資料。",
+  "heritage_api_response": "Heritages API 的回應為 JSON 編碼，包含以下屬性。",
+  "description": "說明",
+  "query_params": "查詢參數",
+  "field_value": "參數值",
+  "field": "欄位",
+  "unique_number": "Unique Number"
+}

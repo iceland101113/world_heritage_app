@@ -16,13 +16,14 @@
   <el-table class="info-table" :data="tableData" stripe @expand-change="handleExpandChange">
     <el-table-column type="expand">
       <template #default="props">
-        <p>{{ props.row.short_description_en }}</p>
+        <p>{{ props.row.short_description }}</p>
       </template>
     </el-table-column>
-    <el-table-column label="Name" prop="name_en" />
-    <el-table-column label="Country" prop="states_name_en" />
+    <el-table-column :label="$t('unique_number')" prop="unique_number" />
+    <el-table-column :label="$t('name')" prop="name" />
+    <el-table-column :label="$t('country')" prop="country" />
   </el-table>
-  <template v-if="total >= 10">
+  <template v-if="total >= 5">
     <div class="example-pagination-block">
       <el-pagination 
       @current-change="handleCurrentChange"
@@ -48,7 +49,7 @@ export default {
     location: {
       type: Array,
       required: true
-    }
+    },
   },
   data() {
     return {
@@ -58,7 +59,7 @@ export default {
       total: 0, 
       list: this.location, 
       tableData: [], 
-      pageSize: 10, 
+      pageSize: 5, 
       // country : 'AU',
     }
   },
@@ -72,10 +73,9 @@ export default {
       console.log(expandedRows);
       if (expandedRows.length > 0) {
         this.$emit('zoom-to-location', row);
+      } else {
+        this.$emit('zoom-to-location', null); 
       }
-      // } else {
-      //   this.$emit('zoom-to-location', null); 
-      // }
     },
     handleCurrentChange(val) {    
       this.currentPage = val;

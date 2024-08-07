@@ -1,15 +1,16 @@
 <template>
   <div class="container">
     <div class="row">
-      <h1>Heritages</h1>
+      <h1>{{ $t("heritage") }}</h1>
+      <!-- <h1>{{ $t("heritage") }}</h1> -->
       <div class="col-6">
-        <p>This is the API for retrieve the world heritages information. You can pass below params to filter the return result.</p>
+        <p>{{ $t("heritage_api_query_params_information") }}</p>
         <table class="table">
           <thead>
             <tr>
-              <th>Query Params</th>
-              <th>Description</th>
-              <th>Value</th>
+              <th>{{ $t("query_params") }}</th>
+              <th>{{ $t("description") }}</th>
+              <th>{{ $t("field_value") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -39,18 +40,18 @@
       <div class="col-6">
         <pre style="background-color: #f2f3f4;">
           <code>
-            GET /api/v1/heritages
+            GET /public/api/v1/heritages
           </code>
         </pre>
       </div>
       <hr>
       <div class="col-6">
-        <p>The following elements are the attribute returned in the Heritages API response</p>
+        <p>{{ $t("heritage_api_response") }}</p>
         <table class="table">
           <thead>
             <tr>
-              <th>Field</th>
-              <th>Description</th>
+              <th>{{ $t("field") }}</th>
+              <th>{{ $t("description") }}</th>
             </tr>
           </thead>
           <tbody>

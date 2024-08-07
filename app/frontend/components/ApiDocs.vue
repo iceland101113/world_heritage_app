@@ -1,5 +1,10 @@
 <template>
   <div class="row">
+    <!-- <div>
+      <h1>{{ $t("greeting") }}</h1>
+      <button @click="changeLanguage('en')">切換成英文</button>&nbsp;
+      <button @click="changeLanguage('zh-TW')">切換成中文</button>
+    </div> -->
     <SideBar @switch-content="onSwitchContent"></SideBar>
     <Content>
       <template v-slot:[contentType]>
@@ -21,6 +26,12 @@ import Introduction from './api_documents/Introduction.vue';
 
 export default {
   components: { SideBar, Content, Heritages, Introduction },
+  props: {
+    locale_params: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       contentType: 'introduction',
@@ -32,11 +43,16 @@ export default {
   methods: {
     onSwitchContent(content) {
       this.contentType = content;
-    }
+    },
+    // changeLanguage(newLocale) {
+    //   this.$i18n.locale = newLocale;
+    // },
   },
   watch: {
   },
   mounted() {
+    console.log('mounted',this.locale_params)
+    this.$i18n.locale = this.locale_params;
   },
 };
 </script>

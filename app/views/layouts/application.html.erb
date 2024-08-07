@@ -30,27 +30,27 @@
     <header id="header">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <%= link_to "Navbar", root_path, class: "navbar-brand"%>
+          <%= link_to "World Heritage", root_path, class: "navbar-brand"%>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item active">
-                <%= link_to "Home", root_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "API Document", api_docs_index_path, class: "nav-link" %>
-              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown link
+                  <i class="bi bi-globe2" aria-hidden="true" style="font-size: large;"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  <%= link_to "English", root_path(locale: 'en'), class: "dropdown-item" %>
+                  <%= link_to "French", root_path(locale: "fr"), class: "dropdown-item" %>
+                  <%= link_to "繁體中文", root_path(locale: "zh-TW"), class: "dropdown-item" %>
                 </div>
+              </li>
+              <li class="nav-item active">
+                <%= link_to t("home"), root_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to t("api_document"), api_docs_index_path, class: "nav-link" %>
               </li>
             </ul>
           </div>

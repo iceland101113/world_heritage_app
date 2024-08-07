@@ -4,8 +4,8 @@
     <div class="container">
       <div class="row">
         <h4><strong>APIs</strong></h4>
-        <span class="nav-item" @click="switchContent('introduction')">Introduction</span>
-        <span class="nav-item" @click="switchContent('heritages')">Heritages</span>
+        <span class="nav-item" @click="switchContent('introduction')">{{ $t("introduction") }}</span>
+        <span class="nav-item" @click="switchContent('heritages')">{{ $t("heritage") }}</span>
       </div>  
     </div>
   </div>

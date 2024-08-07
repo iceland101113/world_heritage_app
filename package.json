@@ -18,6 +18,7 @@
     "postcss-cli": "^10.1.0",
     "sass": "^1.66.1",
     "vue": "3.3.4",
+    "vue-i18n": "^9.9.0",
     "vue-multiselect": "^3.0.0-beta.2"
   },
   "scripts": {
@@ -26,7 +27,8 @@
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
     "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
     "test": "vitest --dom",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "build": "vite build --outDir public"
   },
   "browserslist": [
     "defaults"
@@ -37,5 +39,6 @@
     "vite": "^4.3.0",
     "vite-plugin-ruby": "^3.2.0",
     "vitest": "^1.1.0"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }
