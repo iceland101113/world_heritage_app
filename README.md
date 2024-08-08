@@ -11,7 +11,7 @@
 * Set Up
 ``` bash
 # clone project
-git clone https://github.com/iceland101113/origami-gallery.git
+git clone https://github.com/iceland101113/world_heritage_app.git
 
 # Install dependencies
 bundle install
