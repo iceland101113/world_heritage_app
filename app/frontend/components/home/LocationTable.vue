@@ -13,7 +13,7 @@
       </tr>
     </tbody>
   </table> -->
-  <el-table class="info-table" :data="tableData" stripe @expand-change="handleExpandChange">
+  <el-table class="info-table" :data="tableData" stripe @expand-change="handleExpandChange" :default-expand-all="openrow">
     <el-table-column type="expand">
       <template #default="props">
         <p>{{ props.row.short_description }}</p>
@@ -50,6 +50,10 @@ export default {
       type: Array,
       required: true
     },
+    openrow: {
+      type: Boolean,
+      required: true
+    }
   },
   data() {
     return {

@@ -7,33 +7,32 @@
     <button @click="changeLanguage('en')">切換成英文</button>&nbsp;
     <button @click="changeLanguage('zh-TW')">切換成中文</button>
   </div> -->
-    <div class="row">
-      <div class="col-md-4">
-        <div class="select">
-          <div class="row">
-            <div class="col">
-              <VueMultiselect v-model="region" :options="regions" :allow-empty="true" label="name" track-by="name" :placeholder="$t('select_region')"></VueMultiselect>
-            </div>
-            <div class="col">
-              <VueMultiselect v-model="country" :options="filterCountries" :allow-empty="true" label="name" track-by="name" :placeholder="$t('select_country')"></VueMultiselect>
-            </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="select">
+        <div class="row">
+          <div class="col">
+            <VueMultiselect v-model="region" :options="regions" :allow-empty="true" label="name" track-by="name" :placeholder="$t('select_region')"></VueMultiselect>
           </div>
-          <LocationTable :location="filterHeritages" @zoom-to-location="zoomToLocation"></LocationTable>
+          <div class="col">
+            <VueMultiselect v-model="country" :options="filterCountries" :allow-empty="true" label="name" track-by="name" :placeholder="$t('select_country')"></VueMultiselect>
+          </div>
         </div>
-        <!-- <img src="/LINE_ALBUM_2310204.jpg" /> -->
-      </div>
-      <div class="col-md-8">
-        <div class="row">
-          <div class="col summary-block"><h4>Total</h4><div class="total-block">{{ total_count }}</div></div>
-          <div class="col summary-block"><h4>Natural</h4><div class="natural-heritages-block">{{ natural_heritage_count }}</div></div>
-          <div class="col summary-block"><h4>Cultural</h4><div class="total-block">{{ cultural_heritage_count }}</div></div>
-          <div class="col summary-block"><h4>Mixed</h4><div class="total-block">{{ mixed_heritage_count }}</div></div>
-        </div>
-        <div class="row">
-          <div id="map"></div>
-        </div>
+        <LocationTable :location="filterHeritages" :openrow="openRow" @zoom-to-location="zoomToLocation"></LocationTable>
       </div>
     </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col summary-block"><h4>Total</h4><div class="total-block">{{ total_count }}</div></div>
+        <div class="col summary-block"><h4>Natural</h4><div class="natural-heritages-block">{{ natural_heritage_count }}</div></div>
+        <div class="col summary-block"><h4>Cultural</h4><div class="total-block">{{ cultural_heritage_count }}</div></div>
+        <div class="col summary-block"><h4>Mixed</h4><div class="total-block">{{ mixed_heritage_count }}</div></div>
+      </div>
+      <div class="row">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
   <!-- </div> -->
 </template>
 <script>
@@ -63,6 +62,7 @@ export default {
       region: null,
       filterCountries: [],
       filterHeritages: [],
+      openRow: false,
       Map: {},
     }
   },
@@ -131,29 +131,29 @@ export default {
       });
 
       let markers = L.markerClusterGroup();
-      this.filterHeritages.map(heritage => 
-        L.marker([
+      this.filterHeritages.map((heritage) => {
+        let marker = L.marker([
           heritage.latitude,
           heritage.longitude,
-        ])
-        // .bindPopup(`<p><strong>${location.name_en}</strong></p>${location.short_description_en}`)
-        // .bindPopup(`<p><strong>${heritage.name}</strong></p><img src="/LINE_ALBUM_2310204.jpg" />`, { maxWidth: "auto" })
-        .bindPopup(`<p><strong>${heritage.name}</strong></p><img src="https://myfistbucket20200429.s3.ap-northeast-1.amazonaws.com/world_heritages/${heritage.unique_number}.jpg" rel="preload"/>`, { maxWidth: "auto" })
-      ).forEach((item) => markers.addLayer(item));
+        ])       
+
+        marker.on('click', () => {
+          this.setMarkerPopupContent(marker, heritage)
+          this.heritageDataFilter(heritage)
+        });
+        marker.on('popupclose', () => {
+          this.clearHeritageDataFilter();
+        });
+        return marker;
+      }).forEach((item) => {
+        markers.addLayer(item)
+      });
       openStreetMap.addLayer(markers);
     },
     // nameWithLang ({ name, language }) {
     //   return `${name} — [${language}]`
     // }
     zoomToLocation(item) {
-      // openStreetMap.on("popupopen", (event) => {
-      //   const popupPixelCoords = openStreetMap.project(event.popup.getLatLng());
-      //   const popupHeight = event.popup.getElement().clientHeight;
-      //   popupPixelCoords.y -= popupHeight / 2; // move the popup vertical axis location down (distance: half of popup height)
-      //   openStreetMap.panTo(openStreetMap.unproject(popupPixelCoords), { animate: true }); // pan to calculated location
-      // });
-
-      // openStreetMap.setView(new L.LatLng(item.latitude, item.longitude), 10);
       if (item == null) {
         if (this.filterHeritages.length > 0) {
           openStreetMap.setView(new L.LatLng(this.filterHeritages[0].latitude, this.filterHeritages[0].longitude), 2);
@@ -165,21 +165,69 @@ export default {
         openStreetMap.eachLayer((layer) => {
           if (layer instanceof L.Marker) {
             openStreetMap.removeLayer(layer);
-            console.log('removeLayer')
           }
         });
         let marker = L.marker([
             item.latitude,
             item.longitude
-          ]).bindPopup(`<p><strong>${item.name}</strong></p><img src="https://myfistbucket20200429.s3.ap-northeast-1.amazonaws.com/world_heritages/${item.unique_number}.jpg" rel="preload" />`, { maxWidth: "auto" });
-          // .bindPopup(`<p><strong>${item.name}</strong></p><img src="/pic/${item.unique_number}.jpg" rel="preload" />`, { maxWidth: "auto" });
-        marker.getPopup().getContent();   
+          ])
         marker.addTo(openStreetMap);
+        this.setMarkerPopupContent(marker, item);
+        marker.on('popupclose', () => {
+          this.clearHeritageDataFilter();
+        });
         openStreetMap.setView(new L.LatLng(item.latitude, item.longitude), 10);
-        setInterval(() => {
-          marker.openPopup(); 
-        }, 500);
       }
+    },
+    setMarkerPopupContent(marker, heritage) {
+      const popupContent = document.createElement('div');
+      const imgElement = document.createElement('img');
+
+      const loadingText = document.createElement('p');
+      loadingText.textContent = "Loading image...";
+      popupContent.appendChild(loadingText);
+
+      const img = new Image();
+      img.src = `https://myfistbucket20200429.s3.ap-northeast-1.amazonaws.com/world_heritages/${heritage.unique_number}.jpg`;
+
+      img.onload = () => {
+        // Replace loading text with the image once loaded
+        popupContent.removeChild(loadingText);
+        imgElement.src = img.src;
+
+        const descElement = document.createElement('p');
+        descElement.textContent = heritage.name;
+        popupContent.appendChild(descElement);
+        popupContent.appendChild(imgElement);
+
+        marker.setPopupContent(popupContent).openPopup();
+      };
+
+      img.onerror = () => {
+        // Handle error, e.g., show an error message
+        loadingText.textContent = "Failed to load image.";
+      };
+      marker.bindPopup(popupContent, { maxWidth: "auto" }).openPopup();
+    },
+    heritageDataFilter(item) {
+      this.filterHeritages = this.heritages.filter((heritage) => {
+        return heritage.latitude == item.latitude && heritage.longitude == item.longitude
+      }) 
+      this.openRow = true;
+    },
+    clearHeritageDataFilter() {
+      if (this.region) {
+        this.filterHeritages = this.heritages.filter((heritage) => {
+          return heritage.region == this.region.name
+        })
+      } else if (this.country) {
+        this.filterHeritages = this.heritages.filter((heritage) => {
+          return heritage.country == this.country.name
+        })
+      } else {
+        this.filterHeritages = this.heritages
+      }
+      this.openRow = false;
     },
     // changeLanguage(newLocale) {
     //   this.$i18n.locale = newLocale;
@@ -229,15 +277,11 @@ export default {
         openStreetMap.setView(new L.LatLng(this.filterHeritages[0].latitude, this.filterHeritages[0].longitude), 2);
       }
       this.updateMap(openStreetMap);
-    }
+    },
   },
   mounted() {
-    // ...
-    // const L = window['L'];
     openStreetMap = L.map('map', {
       center: [0, 0],
-      // 可以嘗試改變 zoom 的數值
-      // 筆者嘗試後覺得 18 的縮放比例是較適當的查詢範圍
       zoom: 1,
     });
 
@@ -249,14 +293,13 @@ export default {
     console.log('mounted',this.locale_params)
 
     this.$i18n.locale = this.locale_params;
+
     this.fetchData(this.locale_params).then(() => {
       this.filterHeritages = this.heritages
       this.filterCountries = this.countries
       this.updateMap(openStreetMap)
-      // console.log(this.heritages)
-      // console.log(this.countries)
-      // console.log('fetchData');
     })
+    
     // axios.get('/api/v1/world_heritages').then((response) => {
       // console.log(response);
       // this.locations = response.data.data;
