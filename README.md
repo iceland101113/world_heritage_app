@@ -25,15 +25,24 @@ bundle exec rake import_word_heritages:v2_run
 ```
 
 #### Run Project in Local Environment
+* Use Foreman
 ``` bash
-# install foreman
+# Install Foreman
 gem install foreman
 
-# run project
+# Run Project
 foreman start -f Procfile.dev
 
 ```
 
+* Run Command Separately
+``` bash
+# Run Vite
+bin/vite dev
+
+# Run Rails
+bin/rails s
+```
 
 #### Version
 * Ruby 3.0.2
