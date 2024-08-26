@@ -22,6 +22,17 @@ rails db:migrate
 
 # Import Data
 bundle exec rake import_word_heritages:v2_run
+```
+
+* Run Project in Local Environment
+``` bash
+# install foreman
+gem install foreman
+
+# run project
+foreman start -f Procfile.dev
+
+```
 
 
 #### Version
