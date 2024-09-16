@@ -125,7 +125,7 @@ export default {
     ...mapActions(useStore, ['increment', 'fetchData']),
     updateMap(openStreetMap) {
       openStreetMap.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
+        if (layer instanceof L.MarkerClusterGroup) {
           openStreetMap.removeLayer(layer);
         }
       });
@@ -135,7 +135,7 @@ export default {
         let marker = L.marker([
           heritage.latitude,
           heritage.longitude,
-        ])       
+        ])
 
         marker.on('click', () => {
           this.setMarkerPopupContent(marker, heritage)
@@ -212,7 +212,7 @@ export default {
     heritageDataFilter(item) {
       this.filterHeritages = this.heritages.filter((heritage) => {
         return heritage.latitude == item.latitude && heritage.longitude == item.longitude
-      }) 
+      })
       this.openRow = true;
     },
     clearHeritageDataFilter() {
@@ -299,7 +299,7 @@ export default {
       this.filterCountries = this.countries
       this.updateMap(openStreetMap)
     })
-    
+
     // axios.get('/api/v1/world_heritages').then((response) => {
       // console.log(response);
       // this.locations = response.data.data;

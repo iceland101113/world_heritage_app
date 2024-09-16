@@ -19,7 +19,7 @@ export const useStore = defineStore('usestore', {
     randomizeCounter() {
       this.counter = Math.round(100 * Math.random());
     },
-    async fetchData(locale) { 
+    async fetchData(locale) {
       await axios.get('/api/v1/world_heritages?locale=' + locale).then((response) => {
         // console.log('vuex',response);
         this.heritages = response.data.data;
