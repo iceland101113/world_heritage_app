@@ -68,11 +68,11 @@ jobs:
       - name: Yarn Install
         run: yarn install
 
-      - name: Prepare Database
-        env:
-          RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: bundle exec rails db:prepare
+      # - name: Prepare Database
+      #   env:
+      #     RAILS_ENV: test
+      #     RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      #   run: bundle exec rails db:prepare
 
       # - name: Run tests
       #   env:
