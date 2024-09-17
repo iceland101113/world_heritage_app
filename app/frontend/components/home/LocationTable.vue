@@ -25,7 +25,7 @@
   </el-table>
   <template v-if="total >= 5">
     <div class="example-pagination-block">
-      <el-pagination 
+      <el-pagination
       @current-change="handleCurrentChange"
       :current-page="currentPage"
       :page-size="pageSize"
@@ -59,11 +59,11 @@ export default {
     return {
       country: { name: 'AU' },
       options: [],
-      currentPage: 1, 
-      total: 0, 
-      list: this.location, 
-      tableData: [], 
-      pageSize: 5, 
+      currentPage: 1,
+      total: 0,
+      list: this.location,
+      tableData: [],
+      pageSize: 5,
       // country : 'AU',
     }
   },
@@ -78,10 +78,10 @@ export default {
       if (expandedRows.length > 0) {
         this.$emit('zoom-to-location', row);
       } else {
-        this.$emit('zoom-to-location', null); 
+        this.$emit('zoom-to-location', null);
       }
     },
-    handleCurrentChange(val) {    
+    handleCurrentChange(val) {
       this.currentPage = val;
       this.getList();
     },
