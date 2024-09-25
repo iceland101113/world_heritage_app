@@ -19,6 +19,10 @@ development:
 test:
   <<: *default
   database: world_heritage_test
+  host:     <%= ENV.fetch('PG_HOST',  'localhost') %>
+  username: <%= ENV.fetch('PG_USER', 'postgres') %>
+  password: <%= ENV.fetch('PG_PASSWORD', 'postgres') %>
+  port:     <%= ENV.fetch('PG_PORT', 5432) %>
 
 production:
   <<: *default
