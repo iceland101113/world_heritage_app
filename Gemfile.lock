@@ -293,7 +293,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    uri (0.13.0)
+    uri (0.10.1)
     vite_rails (3.0.15)
       railties (>= 5.1, < 8)
       vite_ruby (~> 3.0, >= 3.2.2)
@@ -330,6 +330,7 @@ DEPENDENCIES
   ruby-openai
   sprockets-rails
   tzinfo-data
+  uri (= 0.10.1)
   vite_rails
 
 RUBY VERSION
