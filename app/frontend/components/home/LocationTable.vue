@@ -16,7 +16,9 @@
   <el-table class="info-table" :data="tableData" stripe @expand-change="handleExpandChange" :default-expand-all="openrow">
     <el-table-column type="expand">
       <template #default="props">
-        <p>{{ props.row.short_description }}</p>
+        <div v-if="props">
+          <p>{{ props.row.short_description }}</p>
+        </div>
       </template>
     </el-table-column>
     <el-table-column :label="$t('unique_number')" prop="unique_number" />
