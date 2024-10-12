@@ -299,7 +299,7 @@ export default {
       this.filterCountries = this.countries
       this.updateMap(openStreetMap)
     })
-
+    console.log('test cd!')
     // axios.get('/api/v1/world_heritages').then((response) => {
       // console.log(response);
       // this.locations = response.data.data;
