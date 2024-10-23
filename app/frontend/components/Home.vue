@@ -128,6 +128,9 @@ export default {
         if (layer instanceof L.MarkerClusterGroup) {
           openStreetMap.removeLayer(layer);
         }
+        if (layer instanceof L.Marker) {
+          openStreetMap.removeLayer(layer);
+        }
       });
 
       let markers = L.markerClusterGroup();
@@ -163,6 +166,9 @@ export default {
         this.updateMap(openStreetMap);
       } else {
         openStreetMap.eachLayer((layer) => {
+          if (layer instanceof L.MarkerClusterGroup) {
+            openStreetMap.removeLayer(layer);
+          }
           if (layer instanceof L.Marker) {
             openStreetMap.removeLayer(layer);
           }
