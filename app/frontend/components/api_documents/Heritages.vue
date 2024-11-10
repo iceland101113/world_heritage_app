@@ -38,9 +38,16 @@
         </table>
       </div>
       <div class="col-6">
+        Get All Heritages
         <pre style="background-color: #f2f3f4;">
           <code>
             GET /public/api/v1/heritages
+          </code>
+        </pre>
+        Get Heritages with Query Params
+        <pre style="background-color: #f2f3f4;">
+          <code>
+            GET /public/api/v1/heritages?category=Cultural&date_inscribed=1980&states_name_en=Ghana&region_name_en=Africa
           </code>
         </pre>
       </div>
@@ -112,6 +119,26 @@
               <td><strong>region_name_fr</strong></td>
               <td>region name of heritage in French</td>
             </tr>
+            <tr>
+              <td><strong>created_at</strong></td>
+              <td>heritage created date</td>
+            </tr>
+            <tr>
+              <td><strong>updated_at</strong></td>
+              <td>heritage updated date</td>
+            </tr>
+            <tr>
+              <td><strong>name_zh</strong></td>
+              <td>heritage name in Chinese</td>
+            </tr>
+            <tr>
+              <td><strong>short_description_zh</strong></td>
+              <td>heritage short description in Chinese</td>
+            </tr>
+            <tr>
+              <td><strong>region_zh</strong></td>
+              <td>region name of heritage in Chinese</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -119,29 +146,40 @@
         <pre style="background-color: #f2f3f4;">
           <code>
             {
+              "total_pages": 47,
+              "current_page": 1,
               "data": [
                 {
-                  "id": 1,
-                  "unique_number": "H1",
-                  "name_en": "Royal Exhibition Building and Carlton Gardens",
-                  "name_fr": "Royal Exhibition Building and Carlton Gardens",
-                  "short_description_en": "The Royal Exhibition Building and Carlton Gardens are of historical,
-                                          architectural, aesthetic, social and scientific (botanical) significance 
-                                          to the State of Victoria.",
-                  "short_description_fr": "The Royal Exhibition Building and Carlton Gardens are of historical,
-                                          architectural, aesthetic, social and scientific (botanical) significance 
-                                          to the State of Victoria.",
-                  "longitude": 144.971,
-                  "latitude": -37.804,
-                  "category": "World Heritage",
-                  "date_inscribed": "2004-07-01",
-                  "states_name_en": "Australia",
-                  "states_name_fr": "Australie",
-                  "region_name_en": "Australia and New Zealand",
-                  "region_name_fr": "Australie et Nouvelle-Zélande"
-                },
+                  "id": 1928,
+                  "unique_number": 39,
+                  "name_en": "Asante Traditional Buildings",
+                  "name_fr": "Bâtiments traditionnels ashanti",
+                  "short_description_en": "To the north-east of Kumasi, these are the last material remains of the great Asante civilization, which reached its high point in the 18th century. Since the dwellings are made of earth, wood and straw, they are vulnerable to the onslaught of time and weather.",
+                  "short_description_fr": "Au nord-est de Koumassi subsistent les derniers t&eacute;moins mat&eacute;riels de la grande civilisation des Ashantis qui connut son apog&eacute;e au XVIII<sup>e</sup> si&egrave;cle. Les maisons de bois, de terre et de chaume sont peu &agrave; peu menac&eacute;es de destruction sous l'effet du temps et du climat.",
+                  "justification_en": null,
+                  "justification_fr": null,
+                  "date_inscribed": 1980,
+                  "secondary_dates": null,
+                  "danger": 0,
+                  "longitude": "-1.6258333",
+                  "latitude": "6.4011111",
+                  "area_hectares": "0.0",
+                  "criteria_txt": "(v)",
+                  "category": "Cultural",
+                  "states_name_en": "Ghana",
+                  "states_name_fr": "Ghana",
+                  "region_en": "Africa",
+                  "region_fr": "Afrique",
+                  "created_at": "2024-08-07T15:11:58.637Z",
+                  "updated_at": "2024-08-07T15:11:58.637Z",
+                  "name_zh": "阿散蒂傳統建築",
+                  "states_name_zh": "迦納",
+                  "short_description_zh": "位於庫馬西東北部，這些是阿散蒂文明的最後物質遺跡，該文明在18世紀達到巔峰。由於住宅建築物主要由泥土、木材和稻草建造而成，因此容易受到時間和天候的侵蝕。這些遺跡代表著阿散蒂文明的重要歷史價值，被列為世界遺產。",
+                  "region_zh": "非洲"
+                }
+                ...
               ]
-            }
+            }  
           </code>
         </pre>
       </div>

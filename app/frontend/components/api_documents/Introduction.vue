@@ -4,6 +4,7 @@
       <h1>{{ $t("introduction") }}</h1>
       <div class="col-6">
         <p>{{ $t("introduction_content") }}</p>
+        <p>The Heritages API rate limiting is 1000 requests per 5 minutes.</p>
       </div>
       <div class="col-6">
         <pre style="background-color: #f2f3f4;">

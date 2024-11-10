@@ -9,7 +9,7 @@ module Public
         end
 
         def heritages_params
-          params.permit(:category, :states_name_en, :region_en)
+          params.permit(:category, :date_inscribed, :states_name_en, :region_en)
         end
       end
     end
