@@ -12,5 +12,12 @@
   "query_params": "Query Params",
   "field_value": "Value",
   "field": "Field",
-  "unique_number": "Unique Number"
+  "unique_number": "Unique Number",
+  "total": "Total",
+  "natural": "Naturel",
+  "cultural": "Culturel",
+  "mixed": "Mixte",
+  "hide_summary": "cliquer pour masquer",
+  "show_summary": "cliquer pour afficher",
+  "search_placeholder": "Rechercher par numéro ou nom"
 }

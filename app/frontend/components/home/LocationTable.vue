@@ -13,7 +13,13 @@
       </tr>
     </tbody>
   </table> -->
-  <el-table class="info-table" :data="tableData" stripe @expand-change="handleExpandChange" :default-expand-all="openrow">
+  <el-input
+    v-model="searchQuery"
+    :placeholder="$t('search_placeholder')"
+    clearable
+    class="search-input"
+  />
+  <el-table ref="table" class="info-table" :data="tableData" stripe @expand-change="handleExpandChange" :default-expand-all="openrow" row-key="unique_number">
     <el-table-column type="expand">
       <template #default="props">
         <div v-if="props">
@@ -66,18 +72,36 @@ export default {
       list: this.location,
       tableData: [],
       pageSize: 5,
+      searchQuery: '',
       // country : 'AU',
     }
   },
   computed: {
     // 可透過 this.counter 取得狀態
     ...mapState(useStore, ['counter']),
+    filteredList() {
+      const q = this.searchQuery.trim().toLowerCase();
+      if (!q) return this.list;
+      return this.list.filter(item =>
+        String(item.unique_number).toLowerCase().includes(q) ||
+        (item.name && item.name.toLowerCase().includes(q))
+      );
+    },
   },
   methods: {
     handleExpandChange(row, expandedRows) {
-      console.log(row);
-      console.log(expandedRows);
-      if (expandedRows.length > 0) {
+      if (this._closing) return;
+
+      const isExpanding = expandedRows.some(r => r.unique_number === row.unique_number);
+
+      if (isExpanding) {
+        this._closing = true;
+        expandedRows.forEach(r => {
+          if (r.unique_number !== row.unique_number) {
+            this.$refs.table.toggleRowExpansion(r, false);
+          }
+        });
+        this._closing = false;
         this.$emit('zoom-to-location', row);
       } else {
         this.$emit('zoom-to-location', null);
@@ -88,8 +112,9 @@ export default {
       this.getList();
     },
     getList() {
-      this.total = this.list.length;
-      this.tableData = this.list.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
+      this.total = this.filteredList.length;
+      const sorted = [...this.filteredList].sort((a, b) => String(a.unique_number).localeCompare(String(b.unique_number), undefined, { numeric: true }));
+      this.tableData = sorted.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);
     },
   },
   watch: {
@@ -100,7 +125,14 @@ export default {
         this.getList();
       },
       deep: true
-    }
+    },
+    searchQuery() {
+      this.currentPage = 1;
+      this.getList();
+    },
+    filteredList(val) {
+      this.$emit('search-change', val);
+    },
   },
   created() {
     this.getList();
@@ -108,9 +140,13 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+  .search-input {
+    margin-top: 10px;
+  }
+
   .info-table {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     // text-align: center;
   }
 

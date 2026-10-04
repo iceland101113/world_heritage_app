@@ -13,5 +13,12 @@
   "query_params": "查詢參數",
   "field_value": "參數值",
   "field": "欄位",
-  "unique_number": "Unique Number"
+  "unique_number": "Unique Number",
+  "total": "總計",
+  "natural": "自然遺產",
+  "cultural": "文化遺產",
+  "mixed": "複合遺產",
+  "hide_summary": "點擊收起",
+  "show_summary": "點擊展開",
+  "search_placeholder": "以編號或名稱搜尋"
 }

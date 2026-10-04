@@ -18,15 +18,23 @@
             <VueMultiselect v-model="country" :options="filterCountries" :allow-empty="true" label="name" track-by="name" :placeholder="$t('select_country')"></VueMultiselect>
           </div>
         </div>
-        <LocationTable :location="filterHeritages" :openrow="openRow" @zoom-to-location="zoomToLocation"></LocationTable>
+        <LocationTable :location="filterHeritages" :openrow="openRow" @zoom-to-location="zoomToLocation" @search-change="onSearchChange"></LocationTable>
       </div>
     </div>
     <div class="col-md-8">
-      <div class="row">
-        <div class="col summary-block"><h4>Total</h4><div class="total-block">{{ total_count }}</div></div>
-        <div class="col summary-block"><h4>Natural</h4><div class="natural-heritages-block">{{ natural_heritage_count }}</div></div>
-        <div class="col summary-block"><h4>Cultural</h4><div class="total-block">{{ cultural_heritage_count }}</div></div>
-        <div class="col summary-block"><h4>Mixed</h4><div class="total-block">{{ mixed_heritage_count }}</div></div>
+      <div class="summary-panel">
+        <div class="row" v-show="showSummary">
+          <div class="col summary-block"><h4>{{ $t('total') }}</h4><div class="total-block">{{ total_count }}</div></div>
+          <div class="col summary-block"><h4>{{ $t('natural') }}</h4><div class="natural-heritages-block">{{ natural_heritage_count }}</div></div>
+          <div class="col summary-block"><h4>{{ $t('cultural') }}</h4><div class="total-block">{{ cultural_heritage_count }}</div></div>
+          <div class="col summary-block"><h4>{{ $t('mixed') }}</h4><div class="total-block">{{ mixed_heritage_count }}</div></div>
+        </div>
+        <div class="row summary-toggle" @click="showSummary = !showSummary">
+          <div class="col-12 text-center p-0">
+            <small class="toggle-hint">{{ showSummary ? $t('hide_summary') : $t('show_summary') }}</small>
+            <span :style="{ display:'inline-block', transition:'transform 0.2s', transform: showSummary ? 'rotate(0deg)' : 'rotate(-90deg)' }">&#9660;</span>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div id="map"></div>
@@ -62,6 +70,8 @@ export default {
       region: null,
       filterCountries: [],
       filterHeritages: [],
+      summaryHeritages: [],
+      showSummary: true,
       openRow: false,
       Map: {},
     }
@@ -81,48 +91,26 @@ export default {
       },
     }),
     total_count() {
-      if (this.filterHeritages.length == 0) {
-        return this.heritages.length;
-      } else {
-        return this.filterHeritages.length;
-      }
+      return this.summaryHeritages.length || this.heritages.length;
     },
     natural_heritage_count() {
-      if (this.filterHeritages.length == 0) {
-        return this.heritages.filter((heritage) => {
-          return heritage.category == 'Natural'
-        }).length
-      } else {
-        return this.filterHeritages.filter((heritage) => {
-          return heritage.category == 'Natural'
-        }).length
-      }
+      const list = this.summaryHeritages.length ? this.summaryHeritages : this.heritages;
+      return list.filter(h => h.category == 'Natural').length;
     },
     cultural_heritage_count() {
-      if (this.filterHeritages.length == 0) {
-        return this.heritages.filter((heritage) => {
-          return heritage.category == 'Cultural'
-        }).length
-      } else {
-        return this.filterHeritages.filter((heritage) => {
-          return heritage.category == 'Cultural'
-        }).length
-      }
+      const list = this.summaryHeritages.length ? this.summaryHeritages : this.heritages;
+      return list.filter(h => h.category == 'Cultural').length;
     },
     mixed_heritage_count() {
-      if (this.filterHeritages.length == 0) {
-        return this.heritages.filter((heritage) => {
-          return heritage.category == 'Mixed'
-        }).length
-      } else {
-        return this.filterHeritages.filter((heritage) => {
-          return heritage.category == 'Mixed'
-        }).length
-      }
+      const list = this.summaryHeritages.length ? this.summaryHeritages : this.heritages;
+      return list.filter(h => h.category == 'Mixed').length;
     },
   },
   methods: {
     ...mapActions(useStore, ['increment', 'fetchData']),
+    onSearchChange(list) {
+      this.summaryHeritages = list;
+    },
     updateMap(openStreetMap) {
       openStreetMap.eachLayer((layer) => {
         if (layer instanceof L.MarkerClusterGroup) {
@@ -165,6 +153,7 @@ export default {
         }
         this.updateMap(openStreetMap);
       } else {
+        this._transitioning = true;
         openStreetMap.eachLayer((layer) => {
           if (layer instanceof L.MarkerClusterGroup) {
             openStreetMap.removeLayer(layer);
@@ -173,6 +162,7 @@ export default {
             openStreetMap.removeLayer(layer);
           }
         });
+        this._transitioning = false;
         let marker = L.marker([
             item.latitude,
             item.longitude
@@ -222,6 +212,7 @@ export default {
       this.openRow = true;
     },
     clearHeritageDataFilter() {
+      if (this._transitioning) return;
       if (this.region) {
         this.filterHeritages = this.heritages.filter((heritage) => {
           return heritage.region == this.region.name
@@ -335,6 +326,22 @@ export default {
     margin-left: 10px;
     // margin-right: 10px;
     // width: 50%;
+  }
+  .summary-panel {
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
+  .summary-toggle {
+    cursor: pointer;
+    background-color: lightgrey;
+    line-height: 1.4;
+  }
+  .toggle-hint {
+    display: block;
+    color: #888;
+    font-size: 0.7rem;
+    margin-top: 2px;
   }
   .summary-block {
     text-align: center;
